@@ -1,9 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'rc-slider/assets/index.css';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
+import './variables.css';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,

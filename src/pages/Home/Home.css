@@ -5,17 +5,75 @@
     background-size: cover;
 }
 
-.home-form {
+.home-card {
+    --input-width: 370px;
+    --input-height: 40px;
+    --card-font-size: 14px;
     background-color: white;
     padding: 50px;
     border-radius: 10px;
     border: 1px solid #6D757D;
+    font-size: var(--card-font-size);
 }
 
-.home-form-label {
-    margin-bottom: 7px;
+.home-card-label {
+    margin: 7px 0;
 }
 
-.home-form-input {
-    width: 300px;
+.home-card-input {
+    width: var(--input-width);
+    height: var(--input-height);
+    margin-bottom: 20px;
+}
+
+.home-card-filter-btn {
+    width: var(--input-width);
+    font-size: var(--card-font-size);
+}
+
+.home-card-distance {
+    color: var(--yper-yellow);
+    font-weight: 600;
+}
+
+.home-card-results-title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.home-card-slider {
+    margin: 5px 10px 40px 10px;
+    width: calc(var(--input-width) - 20px);
+    /*padding: 0 10px 0 10px;*/
+}
+
+.rc-slider-track {
+    background-color: var(--yper-yellow);
+}
+
+.rc-slider-handle {
+    border: solid 2px var(--yper-yellow);
+}
+
+.rc-slider-dot-active {
+    border-color: var(--yper-yellow);
+}
+
+.home-card-alert {
+    margin-top: 10px;
+    width: var(--input-width);
+}
+
+.home-card-retailPoint {
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-bottom: 1px solid var(--yper-yellow);
+}
+
+.home-card-results {
+    max-height: 280px;
+    overflow: auto;
 }
