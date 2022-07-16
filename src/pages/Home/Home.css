@@ -1,0 +1,21 @@
+.home-body {
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(0deg, rgba(238, 116, 2, 0.281), rgba(255, 255, 255)), url('./../../assets/yper-bg-home.jpeg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.home-form {
+    background-color: white;
+    padding: 50px;
+    border-radius: 10px;
+    border: 1px solid #6D757D;
+}
+
+.home-form-label {
+    margin-bottom: 7px;
+}
+
+.home-form-input {
+    width: 300px;
+}
