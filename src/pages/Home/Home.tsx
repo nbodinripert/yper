@@ -2,8 +2,8 @@ import Slider from 'rc-slider';
 import { FunctionComponent, useContext, useState } from 'react';
 import { Alert, Button } from 'react-bootstrap';
 import ReactGoogleAutocomplete from 'react-google-autocomplete';
+import { API_KEY } from '../../conf/gmaps.conf';
 import RetailPointsContext from '../../contexts/RetailPointsContext';
-import Location from '../../models/location.model';
 import { getRetailsPoints } from '../../providers/retailsPoints.provider';
 import RetailPointItem from './components/RetailPointItem/RetailPointItem';
 import './Home.css';
@@ -12,11 +12,12 @@ const DEFAULT_DISTANCE = 30; // km
 
 const Home: FunctionComponent = () => {
   //#region contexts
-  const { retailPoints, setRetailPoints } = useContext(RetailPointsContext);
+  const { userLocation, setUserLocation, retailPoints, setRetailPoints } =
+    useContext(RetailPointsContext);
   //#endregion
 
   //#region states
-  const [userLocation, setUserLocation] = useState<Location | null>(null);
+  const [isAddressSelected, setIsAddressSelected] = useState<boolean>(false);
   const [distance, setDistance] = useState<number>(DEFAULT_DISTANCE);
   const [errorMsg, setErrorMsg] = useState<string>('');
   //#endregion
@@ -32,18 +33,13 @@ const Home: FunctionComponent = () => {
       setUserLocation({
         lat,
         lng,
+        address: place.formatted_address,
       });
       setRetailPoints(results);
+      setIsAddressSelected(true);
     } catch (error) {
       setErrorMsg(error.toString());
     }
-  };
-
-  const handleInputChange = (): void => {
-    if (errorMsg) setErrorMsg('');
-    if (userLocation) setUserLocation(null);
-    if (retailPoints.length > 0) setRetailPoints([]);
-    if (distance !== DEFAULT_DISTANCE) setDistance(DEFAULT_DISTANCE);
   };
 
   const handleSliderChange = (evt: any): void => {
@@ -70,14 +66,14 @@ const Home: FunctionComponent = () => {
       <div className="home-card">
         <p className="home-card-label">Votre adresse postale</p>
         <ReactGoogleAutocomplete
-          apiKey={'AIzaSyCNemhlRhzcu8bF9WzTZOZtyPdWWPL5O-k'}
+          apiKey={API_KEY}
           onPlaceSelected={handlePlaceSelect}
-          onChange={handleInputChange}
           options={{
             componentRestrictions: { country: 'fr' },
             types: ['address'],
           }}
           className="home-card-input"
+          defaultValue={userLocation?.address}
         />
         <Alert
           className={errorMsg ? 'home-card-alert' : 'hidden'}
@@ -85,7 +81,7 @@ const Home: FunctionComponent = () => {
         >
           {errorMsg}
         </Alert>
-        {userLocation && (
+        {isAddressSelected && (
           <div>
             <p className="home-card-results-title">
               Liste des points de ventes à proximité

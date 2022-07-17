@@ -1,4 +1,4 @@
-import axios from '../conf/axiosConfig';
+import axios from '../conf/axios.conf';
 import RetailPoint from '../models/retailPoint.model';
 
 export const getRetailsPoints = async (
