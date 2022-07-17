@@ -8,7 +8,7 @@ import { getRetailsPoints } from '../../providers/retailsPoints.provider';
 import RetailPointItem from './components/RetailPointItem/RetailPointItem';
 import './Home.css';
 
-const DEFAULT_DISTANCE = 30;
+const DEFAULT_DISTANCE = 30; // km
 
 const Home: FunctionComponent = () => {
   //#region contexts
@@ -110,7 +110,7 @@ const Home: FunctionComponent = () => {
               {retailPoints.map((retailPoint, index) => (
                 <RetailPointItem
                   key={retailPoint.id + '_' + index}
-                  name={retailPoint.name}
+                  retailPoint={retailPoint}
                 />
               ))}
             </div>

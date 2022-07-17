@@ -20,6 +20,10 @@ export const getRetailsPoints = async (
       name: result.name,
       address: result.address.formatted_address,
       opening_hours: result.opening_hours,
+      location: {
+        lat: result.address.location.coordinates[1],
+        lng: result.address.location.coordinates[0],
+      },
     }));
   } catch (error) {
     throw error;

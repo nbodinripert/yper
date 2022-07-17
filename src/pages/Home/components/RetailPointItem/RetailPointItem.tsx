@@ -1,17 +1,25 @@
 import { FunctionComponent } from 'react';
-import './RetailPointItem.css';
+import { Link } from 'react-router-dom';
 import icon from '../../../../assets/yper-icon.png';
+import RetailPoint from '../../../../models/retailPoint.model';
+import './RetailPointItem.css';
 
 interface RetailPointItemProps {
-  name: string;
+  retailPoint: RetailPoint;
 }
 
-const RetailPointItem: FunctionComponent<RetailPointItemProps> = ({ name }) => {
+const RetailPointItem: FunctionComponent<RetailPointItemProps> = ({
+  retailPoint,
+}) => {
   return (
-    <div className="retailPointItem">
+    <Link
+      to={`/retailpoint/${retailPoint.id}`}
+      state={retailPoint}
+      className="retailPointItem"
+    >
       <img src={icon} alt="logo-yper" className="retailPointItem-icon" />
-      {name}
-    </div>
+      {retailPoint.name}
+    </Link>
   );
 };
 

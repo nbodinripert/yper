@@ -5,6 +5,7 @@ import RetailPointsContext from './contexts/RetailPointsContext';
 import RetailPoint from './models/retailPoint.model';
 import Home from './pages/Home/Home';
 import NotFound from './pages/NotFound';
+import { RetailPointDetails } from './pages/RetailPointDetails/RetailPointDetails';
 
 function App() {
   const [retailPoints, setRetailPoints] = useState<RetailPoint[]>([]);
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path="*" element={<NotFound />} />
         <Route path="/" element={<Home />} />
+        <Route path="/retailpoint/:id" element={<RetailPointDetails />} />
       </Routes>
     </RetailPointsContext.Provider>
   );
