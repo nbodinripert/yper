@@ -9,15 +9,18 @@ import './RetailPointDetails.css';
 const DEFAULT_ZOOM = 13;
 
 export const RetailPointDetails = () => {
+  //#region location
   const location = useLocation();
+  //#endregion
+
+  //#region render
   const retailPoint = location.state as RetailPoint;
   const center = {
     lat: retailPoint.location.lat,
     lng: retailPoint.location.lng,
   };
-
   return (
-    <div className="details-body">
+    <div className="details-body fullscreen">
       <div className="details-map-wrapper">
         <GoogleMapReact
           bootstrapURLKeys={{

@@ -11,6 +11,7 @@ interface RetailPointItemProps {
 const RetailPointItem: FunctionComponent<RetailPointItemProps> = ({
   retailPoint,
 }) => {
+  //#region render
   return (
     <Link
       to={`/retailpoint/${retailPoint.id}`}
@@ -21,6 +22,7 @@ const RetailPointItem: FunctionComponent<RetailPointItemProps> = ({
       {retailPoint.name}
     </Link>
   );
+  //#endregion
 };
 
 export default RetailPointItem;

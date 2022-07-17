@@ -10,9 +10,12 @@ import { RetailPointDetails } from './pages/RetailPointDetails/RetailPointDetail
 import { reverseGeocoding } from './providers/gmaps.provider';
 
 function App() {
+  //#region states
   const [userLocation, setUserLocation] = useState<Location | null>(null);
   const [retailPoints, setRetailPoints] = useState<RetailPoint[]>([]);
+  //endregion
 
+  //#region effects
   useEffect(() => {
     const fetchUserAddress = async (): Promise<void> => {
       if (navigator?.geolocation) {
@@ -29,7 +32,9 @@ function App() {
 
     fetchUserAddress().catch(console.error);
   }, []);
+  //endregion
 
+  //#region render
   return (
     <RetailPointsContext.Provider
       value={{ userLocation, setUserLocation, retailPoints, setRetailPoints }}
@@ -41,6 +46,7 @@ function App() {
       </Routes>
     </RetailPointsContext.Provider>
   );
+  //endregion
 }
 
 export default App;

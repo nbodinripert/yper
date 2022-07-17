@@ -62,7 +62,7 @@ const Home: FunctionComponent = () => {
 
   //#region render
   return (
-    <div className="home-body flex-row justify-content-center align-items-center">
+    <div className="home-body fullscreen flex-row justify-content-center align-items-center">
       <div className="home-card">
         <p className="home-card-label">Votre adresse postale</p>
         <ReactGoogleAutocomplete
