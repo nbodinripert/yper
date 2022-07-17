@@ -1,0 +1,21 @@
+.retailPointItem {
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-bottom: 1px solid var(--yper-yellow);
+    font-weight: 500;
+    cursor: pointer;
+    background-color: rgb(245, 239, 239);
+    opacity: 0.6;
+    transition: 0.3s;
+}
+
+.retailPointItem:hover {
+    opacity: 1;
+}
+
+.retailPointItem-icon {
+    width: 20px;
+}

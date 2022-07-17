@@ -5,6 +5,7 @@ import ReactGoogleAutocomplete from 'react-google-autocomplete';
 import RetailPointsContext from '../../contexts/RetailPointsContext';
 import Location from '../../models/location.model';
 import { getRetailsPoints } from '../../providers/retailsPoints.provider';
+import RetailPointItem from './components/RetailPointItem/RetailPointItem';
 import './Home.css';
 
 const DEFAULT_DISTANCE = 30;
@@ -91,7 +92,7 @@ const Home: FunctionComponent = () => {
             </p>
             <Button
               className="home-card-filter-btn"
-              variant="outline-secondary"
+              variant="secondary"
               onClick={handleFilterBtnClick}
             >
               Filtrer à <span className="home-card-distance">{distance}</span>{' '}
@@ -107,12 +108,10 @@ const Home: FunctionComponent = () => {
             />
             <div className="home-card-results">
               {retailPoints.map((retailPoint, index) => (
-                <div
+                <RetailPointItem
                   key={retailPoint.id + '_' + index}
-                  className="home-card-retailPoint"
-                >
-                  {retailPoint.name}
-                </div>
+                  name={retailPoint.name}
+                />
               ))}
             </div>
             <Alert
