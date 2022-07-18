@@ -26,8 +26,9 @@ const Home: FunctionComponent = () => {
   const [errorMsg, setErrorMsg] = useState<string>('');
   //#endregion
 
+  //#region effects
   useEffect(() => {
-    const fetchRetailsPoints = async () => {
+    const fetchRetailsPoints = async (): Promise<void> => {
       if (!userLocation) return;
       const results = await getRetailsPoints(
         userLocation!.lat,
@@ -40,6 +41,7 @@ const Home: FunctionComponent = () => {
       setErrorMsg(error.toString());
     });
   }, [userLocation?.address]);
+  //#endregion
 
   //#region handle methods
   const handlePlaceSelect = (place: Record<string, any>): void => {
@@ -120,25 +122,21 @@ const Home: FunctionComponent = () => {
               marks={{ 1: 1, 30: 30, 50: 50 }}
               onChange={handleSliderChange}
             />
-            <div className="home-card-results">
-              {retailPoints.map((retailPoint, index) => (
-                <RetailPointItem
-                  key={retailPoint.id + '_' + index}
-                  retailPoint={retailPoint}
-                />
-              ))}
-            </div>
-            <Alert
-              className={
-                !retailPoints || retailPoints.length === 0
-                  ? 'home-card-alert'
-                  : 'hidden'
-              }
-              variant="warning"
-            >
-              Il n&apos;y a aucun points de vente dans les {distance} kilomètres
-              autour de votre adresse
-            </Alert>
+            {retailPoints && retailPoints.length > 0 ? (
+              <div className="home-card-results">
+                {retailPoints.map((retailPoint, index) => (
+                  <RetailPointItem
+                    key={retailPoint.id + '_' + index}
+                    retailPoint={retailPoint}
+                  />
+                ))}
+              </div>
+            ) : (
+              <Alert className="home-card-alert" variant="warning">
+                Pas de point de vente disponible, veuillez aggrandir la zone de
+                votre recherche
+              </Alert>
+            )}
           </div>
         )}
       </div>
