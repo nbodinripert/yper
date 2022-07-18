@@ -3,6 +3,12 @@
     cursor: pointer;
 }
 
+.yper-pin {
+    position: absolute;
+    top: -35px;
+    left: -10px;
+}
+
 .yper-pin-body {
     font-size: 13px;
 }

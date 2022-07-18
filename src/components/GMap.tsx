@@ -7,10 +7,10 @@ interface GMapProps {
     lat: number;
     lng: number;
   };
-  children: JSX.Element | JSX.Element[];
+  children?: React.ReactNode;
 }
 
-const DEFAULT_ZOOM = 13;
+const DEFAULT_ZOOM = 14;
 const DEFAULT_CENTER = { lat: 50.69774627685547, lng: 3.169513463973999 };
 
 export const GMap: FunctionComponent<GMapProps> = ({

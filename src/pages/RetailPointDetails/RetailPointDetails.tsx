@@ -21,6 +21,7 @@ export const RetailPointDetails = () => {
       <div className="details-map-wrapper">
         <GMap center={center}>
           <Pin
+            imgSrc={marker}
             lat={center.lat}
             lng={center.lng}
             header={retailPoint.name}

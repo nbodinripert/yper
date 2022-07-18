@@ -1,7 +1,5 @@
 .home-body {
     --search-body-width: 400px;
-    background: linear-gradient(0deg, rgba(238, 116, 2, 0.281), rgba(255, 255, 255)), url('./../../assets/yper-bg-home.jpeg') no-repeat center center fixed;
-    background-size: cover;
     width: 100vw;
     overflow-y: hidden;
 }
@@ -15,6 +13,10 @@
     --input-width: 350px;
     --input-height: 40px;
     --card-font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     width: var(--search-body-width);
     height: 100vh;
     background-color: white;
@@ -71,8 +73,9 @@
 }
 
 .home-search-results {
-    height: 280px;
+    height: 70%;
     overflow-y: scroll;
+    width: var(--input-width);
 }
 
 .home-search-results::-webkit-scrollbar {

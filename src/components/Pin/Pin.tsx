@@ -1,10 +1,10 @@
 import { FunctionComponent } from 'react';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import marker from '../../assets/yper-marker.png';
+import { useNavigate } from 'react-router-dom';
 import './Pin.css';
 
 interface PinProps {
+  imgSrc: string;
   lat: number;
   lng: number;
   header?: string;
@@ -14,6 +14,18 @@ interface PinProps {
 }
 
 const Pin: FunctionComponent<PinProps> = (props) => {
+  //#region navigate
+  const navigate = useNavigate();
+  //#endregion
+
+  //#region handle methods
+  const handleImgClick = () => {
+    if (props.linkTo) {
+      navigate(props.linkTo, { state: props.state });
+    }
+  };
+  //#endregion
+
   //#region render
   return (
     <OverlayTrigger
@@ -26,13 +38,12 @@ const Pin: FunctionComponent<PinProps> = (props) => {
         </Popover>
       }
     >
-      {props.linkTo ? (
-        <Link to={props.linkTo} state={props.state}>
-          <img src={marker} alt="yper-marker" className="yper-pin" />
-        </Link>
-      ) : (
-        <img src={marker} alt="yper-marker" className="yper-pin" />
-      )}
+      <img
+        src={props.imgSrc}
+        alt="yper-marker"
+        className="yper-pin"
+        onClick={handleImgClick}
+      />
     </OverlayTrigger>
   );
   //#endregion

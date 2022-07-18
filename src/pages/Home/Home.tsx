@@ -2,6 +2,8 @@ import Slider from 'rc-slider';
 import { FunctionComponent, useContext, useEffect, useState } from 'react';
 import { Alert, Button, Spinner } from 'react-bootstrap';
 import ReactGoogleAutocomplete from 'react-google-autocomplete';
+import gmapMarker from '../../assets/gmap-marker.png';
+import marker from '../../assets/yper-marker.png';
 import { GMap } from '../../components/GMap';
 import Pin from '../../components/Pin/Pin';
 import { API_KEY } from '../../conf/gmaps.conf';
@@ -83,9 +85,19 @@ const Home: FunctionComponent = () => {
               : undefined
           }
         >
+          {userLocation && (
+            <Pin
+              lat={userLocation.lat}
+              lng={userLocation.lng}
+              imgSrc={gmapMarker}
+              header="Vous êtes ici"
+              details={userLocation.address}
+            />
+          )}
           {retailPoints.map((retailPoint, index) => (
             <Pin
               key={retailPoint.id + '_' + index}
+              imgSrc={marker}
               lat={retailPoint.location.lat}
               lng={retailPoint.location.lng}
               header={retailPoint.name}
@@ -125,7 +137,7 @@ const Home: FunctionComponent = () => {
           {errorMsg}
         </Alert>
         {userLocation && (
-          <div>
+          <div className="flex-col align-items-center">
             <p className="home-search-title">
               Liste des points de ventes à proximité
             </p>
