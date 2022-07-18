@@ -18,6 +18,11 @@
     margin: 7px 0;
 }
 
+.home-card-spinner {
+    margin-left: 10px;
+    /*color: var(--yper-yellow);*/
+}
+
 .home-card-input {
     width: var(--input-width);
     height: var(--input-height);

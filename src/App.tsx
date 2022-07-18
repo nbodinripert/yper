@@ -12,6 +12,8 @@ import { reverseGeocoding } from './providers/gmaps.provider';
 function App() {
   //#region states
   const [userLocation, setUserLocation] = useState<Location | null>(null);
+  const [isUserLocationLoading, setIsUserLocationLoading] =
+    useState<boolean>(false);
   const [retailPoints, setRetailPoints] = useState<RetailPoint[]>([]);
   //endregion
 
@@ -19,6 +21,7 @@ function App() {
   useEffect(() => {
     const fetchUserAddress = async (): Promise<void> => {
       if (navigator?.geolocation) {
+        setIsUserLocationLoading(true);
         navigator.geolocation.getCurrentPosition(async (location) => {
           if (location) {
             const lat = location.coords.latitude;
@@ -26,6 +29,7 @@ function App() {
             const address = await reverseGeocoding(lat, lng);
             setUserLocation({ lat, lng, address });
           }
+          setIsUserLocationLoading(false);
         });
       }
     };
@@ -37,7 +41,13 @@ function App() {
   //#region render
   return (
     <RetailPointsContext.Provider
-      value={{ userLocation, setUserLocation, retailPoints, setRetailPoints }}
+      value={{
+        userLocation,
+        setUserLocation,
+        isUserLocationLoading,
+        retailPoints,
+        setRetailPoints,
+      }}
     >
       <Routes>
         <Route path="*" element={<NotFound />} />

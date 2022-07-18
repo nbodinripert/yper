@@ -5,6 +5,7 @@ import RetailPoint from '../models/retailPoint.model';
 interface RetailsPointsContextState {
   userLocation: Location | null;
   setUserLocation: React.Dispatch<React.SetStateAction<Location | null>>;
+  isUserLocationLoading: boolean;
   retailPoints: RetailPoint[];
   setRetailPoints: React.Dispatch<React.SetStateAction<RetailPoint[]>>;
 }
@@ -12,6 +13,7 @@ interface RetailsPointsContextState {
 const defaultState = {
   userLocation: null,
   setUserLocation: () => {},
+  isUserLocationLoading: false,
   retailPoints: [],
   setRetailPoints: () => {},
 };

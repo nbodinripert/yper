@@ -1,6 +1,6 @@
 import Slider from 'rc-slider';
-import { FunctionComponent, useContext, useState } from 'react';
-import { Alert, Button } from 'react-bootstrap';
+import { FunctionComponent, useContext, useEffect, useState } from 'react';
+import { Alert, Button, Spinner } from 'react-bootstrap';
 import ReactGoogleAutocomplete from 'react-google-autocomplete';
 import { API_KEY } from '../../conf/gmaps.conf';
 import RetailPointsContext from '../../contexts/RetailPointsContext';
@@ -12,34 +12,42 @@ const DEFAULT_DISTANCE = 30; // km
 
 const Home: FunctionComponent = () => {
   //#region contexts
-  const { userLocation, setUserLocation, retailPoints, setRetailPoints } =
-    useContext(RetailPointsContext);
+  const {
+    userLocation,
+    setUserLocation,
+    isUserLocationLoading,
+    retailPoints,
+    setRetailPoints,
+  } = useContext(RetailPointsContext);
   //#endregion
 
   //#region states
-  const [isAddressSelected, setIsAddressSelected] = useState<boolean>(false);
   const [distance, setDistance] = useState<number>(DEFAULT_DISTANCE);
   const [errorMsg, setErrorMsg] = useState<string>('');
   //#endregion
 
-  //#region handle methods
-  const handlePlaceSelect = async (
-    place: Record<string, any>,
-  ): Promise<void> => {
-    try {
-      const lat = place.geometry.location.lat();
-      const lng = place.geometry.location.lng();
-      const results = await getRetailsPoints(lat, lng, distance);
-      setUserLocation({
-        lat,
-        lng,
-        address: place.formatted_address,
-      });
+  useEffect(() => {
+    const fetchRetailsPoints = async () => {
+      if (!userLocation) return;
+      const results = await getRetailsPoints(
+        userLocation!.lat,
+        userLocation!.lng,
+        distance,
+      );
       setRetailPoints(results);
-      setIsAddressSelected(true);
-    } catch (error) {
+    };
+    fetchRetailsPoints().catch((error) => {
       setErrorMsg(error.toString());
-    }
+    });
+  }, [userLocation?.address]);
+
+  //#region handle methods
+  const handlePlaceSelect = (place: Record<string, any>): void => {
+    setUserLocation({
+      lat: place.geometry.location.lat(),
+      lng: place.geometry.location.lng(),
+      address: place.formatted_address,
+    });
   };
 
   const handleSliderChange = (evt: any): void => {
@@ -64,7 +72,17 @@ const Home: FunctionComponent = () => {
   return (
     <div className="home-body fullscreen flex-row justify-content-center align-items-center">
       <div className="home-card">
-        <p className="home-card-label">Votre adresse postale</p>
+        <p className="home-card-label">
+          Votre adresse postale{' '}
+          {isUserLocationLoading && (
+            <Spinner
+              as="span"
+              animation="border"
+              size="sm"
+              className="home-card-spinner"
+            />
+          )}
+        </p>
         <ReactGoogleAutocomplete
           apiKey={API_KEY}
           onPlaceSelected={handlePlaceSelect}
@@ -81,7 +99,7 @@ const Home: FunctionComponent = () => {
         >
           {errorMsg}
         </Alert>
-        {isAddressSelected && (
+        {userLocation && (
           <div>
             <p className="home-card-results-title">
               Liste des points de ventes à proximité
