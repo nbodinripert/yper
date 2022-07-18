@@ -1,12 +1,9 @@
-import GoogleMapReact from 'google-map-react';
 import { useLocation } from 'react-router-dom';
 import marker from '../../assets/yper-marker.png';
+import { GMap } from '../../components/GMap';
 import Pin from '../../components/Pin/Pin';
-import { API_KEY } from '../../conf/gmaps.conf';
 import RetailPoint from '../../models/retailPoint.model';
 import './RetailPointDetails.css';
-
-const DEFAULT_ZOOM = 13;
 
 export const RetailPointDetails = () => {
   //#region location
@@ -22,20 +19,14 @@ export const RetailPointDetails = () => {
   return (
     <div className="details-body fullscreen">
       <div className="details-map-wrapper">
-        <GoogleMapReact
-          bootstrapURLKeys={{
-            key: API_KEY,
-          }}
-          defaultCenter={center}
-          defaultZoom={DEFAULT_ZOOM}
-        >
+        <GMap center={center}>
           <Pin
             lat={center.lat}
             lng={center.lng}
             header={retailPoint.name}
             details={retailPoint.address}
           />
-        </GoogleMapReact>
+        </GMap>
       </div>
       <div className="details-data">
         <p className="details-data-h1">
@@ -52,4 +43,5 @@ export const RetailPointDetails = () => {
       </div>
     </div>
   );
+  //#endregion
 };

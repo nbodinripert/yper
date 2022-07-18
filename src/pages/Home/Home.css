@@ -1,50 +1,54 @@
 .home-body {
+    --search-body-width: 400px;
     background: linear-gradient(0deg, rgba(238, 116, 2, 0.281), rgba(255, 255, 255)), url('./../../assets/yper-bg-home.jpeg') no-repeat center center fixed;
     background-size: cover;
+    width: 100vw;
+    overflow-y: hidden;
 }
 
-.home-card {
-    --input-width: 370px;
+.home-body-map-wrapper {
+    width: calc(100% - var(--search-body-width));
+    height: 100vh;
+}
+
+.home-search {
+    --input-width: 350px;
     --input-height: 40px;
     --card-font-size: 14px;
+    width: var(--search-body-width);
+    height: 100vh;
     background-color: white;
-    padding: 50px;
-    border-radius: 10px;
-    border: 1px solid #6D757D;
     font-size: var(--card-font-size);
+    padding: 10px;
 }
 
-.home-card-label {
-    margin: 7px 0;
-}
-
-.home-card-spinner {
+.home-search-spinner {
     margin-left: 10px;
     color: var(--yper-yellow);
 }
 
-.home-card-input {
+.home-search-input {
     width: var(--input-width);
     height: var(--input-height);
     margin-bottom: 20px;
 }
 
-.home-card-filter-btn {
+.home-search-filter-btn {
     width: var(--input-width);
     font-size: var(--card-font-size);
 }
 
-.home-card-distance {
+.home-search-distance {
     color: var(--yper-yellow);
     font-weight: 600;
 }
 
-.home-card-results-title {
+.home-search-title {
     font-size: 16px;
     font-weight: 600;
 }
 
-.home-card-slider {
+.home-search-slider {
     margin: 5px 10px 40px 10px;
     width: calc(var(--input-width) - 20px);
 }
@@ -61,22 +65,22 @@
     border-color: var(--yper-yellow);
 }
 
-.home-card-alert {
+.home-search-alert {
     margin-top: 10px;
     width: var(--input-width);
 }
 
-.home-card-results {
+.home-search-results {
     height: 280px;
     overflow-y: scroll;
 }
 
-.home-card-results::-webkit-scrollbar {
+.home-search-results::-webkit-scrollbar {
     -webkit-appearance: none;
     width: 7px;
 }
 
-.home-card-results::-webkit-scrollbar-thumb {
+.home-search-results::-webkit-scrollbar-thumb {
     border-radius: 4px;
     background-color: rgba(0, 0, 0, .5);
     -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);

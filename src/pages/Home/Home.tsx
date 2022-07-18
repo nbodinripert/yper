@@ -2,6 +2,8 @@ import Slider from 'rc-slider';
 import { FunctionComponent, useContext, useEffect, useState } from 'react';
 import { Alert, Button, Spinner } from 'react-bootstrap';
 import ReactGoogleAutocomplete from 'react-google-autocomplete';
+import { GMap } from '../../components/GMap';
+import Pin from '../../components/Pin/Pin';
 import { API_KEY } from '../../conf/gmaps.conf';
 import RetailPointsContext from '../../contexts/RetailPointsContext';
 import { getRetailsPoints } from '../../providers/retailsPoints.provider';
@@ -72,16 +74,37 @@ const Home: FunctionComponent = () => {
 
   //#region render
   return (
-    <div className="home-body fullscreen flex-row justify-content-center align-items-center">
-      <div className="home-card">
-        <p className="home-card-label">
+    <div className="home-body flex-row">
+      <div className="home-body-map-wrapper">
+        <GMap
+          center={
+            userLocation
+              ? { lat: userLocation.lat, lng: userLocation.lng }
+              : undefined
+          }
+        >
+          {retailPoints.map((retailPoint, index) => (
+            <Pin
+              key={retailPoint.id + '_' + index}
+              lat={retailPoint.location.lat}
+              lng={retailPoint.location.lng}
+              header={retailPoint.name}
+              details={retailPoint.address}
+              linkTo={`/retailpoint/${retailPoint.id}`}
+              state={retailPoint}
+            />
+          ))}
+        </GMap>
+      </div>
+      <div className="home-search">
+        <p className="home-search-title">
           Votre adresse postale{' '}
           {isUserLocationLoading && (
             <Spinner
               as="span"
               animation="border"
               size="sm"
-              className="home-card-spinner"
+              className="home-search-spinner"
             />
           )}
         </p>
@@ -92,38 +115,38 @@ const Home: FunctionComponent = () => {
             componentRestrictions: { country: 'fr' },
             types: ['address'],
           }}
-          className="home-card-input"
+          className="home-search-input"
           defaultValue={userLocation?.address}
         />
         <Alert
-          className={errorMsg ? 'home-card-alert' : 'hidden'}
+          className={errorMsg ? 'home-search-alert' : 'hidden'}
           variant="danger"
         >
           {errorMsg}
         </Alert>
         {userLocation && (
           <div>
-            <p className="home-card-results-title">
+            <p className="home-search-title">
               Liste des points de ventes à proximité
             </p>
             <Button
-              className="home-card-filter-btn"
+              className="home-search-filter-btn"
               variant="secondary"
               onClick={handleFilterBtnClick}
             >
-              Filtrer à <span className="home-card-distance">{distance}</span>{' '}
+              Filtrer à <span className="home-search-distance">{distance}</span>{' '}
               km de chez vous
             </Button>
             <Slider
               min={1}
               max={50}
               defaultValue={DEFAULT_DISTANCE}
-              className="home-card-slider"
+              className="home-search-slider"
               marks={{ 1: 1, 30: 30, 50: 50 }}
               onChange={handleSliderChange}
             />
             {retailPoints && retailPoints.length > 0 ? (
-              <div className="home-card-results">
+              <div className="home-search-results">
                 {retailPoints.map((retailPoint, index) => (
                   <RetailPointItem
                     key={retailPoint.id + '_' + index}
@@ -132,7 +155,7 @@ const Home: FunctionComponent = () => {
                 ))}
               </div>
             ) : (
-              <Alert className="home-card-alert" variant="warning">
+              <Alert className="home-search-alert" variant="warning">
                 Pas de point de vente disponible, veuillez aggrandir la zone de
                 votre recherche
               </Alert>
